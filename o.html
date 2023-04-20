@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+
+<center>
+    <pre>
+        BASIC COMMANDS
+
+
+1.	What command can be used to display the current directory in a command prompt?
+-'pwd' command is used to display absolute,full path of the current or working directory.($pwd)
+
+2.	What command can be used to list all files and directories in a directory?
+-'ls' command is used to list al files and directories.($ls)
+
+3.	What command can be used to display the contents of a file?
+-'cat' command is used to list all files and directories.
+($cat file_name)
+
+4.	How can you rename a file using the command line?
+-'mv' command is used to move and rename files.
+(mv old_name new_name;)
+
+5.	How can you create a new file using the command line?
+-'cat' command is used to create a new file.
+($cat > file_name)
+
+6.	How to remove files without confirmation.
+-'rm' command is used to rename a file
+(rm filename)
+
+7.	What is the output of the command ls *?
+-using 'ls *' command, files and directories are displayed separately.
+
+8.	What command can be used to display the current date and time?
+-'date' command is used to display current date and time.
+(date) 
+
+9.	What command can be used to start a new process?
+-'fork()' creates new process from existing process.
+
+10.	What command can be used to find the total number of files in a directory?
+-'ls -1 | wc -l' returns total number of files in a directory.
+
+11.	What command can be used to display the last modification time of a file?
+-'touch' command is used to change time stamps like access time and modidification time on existing files
+(touch file1 file2 file3)
+
+12.	What is finger command used for?
+-'finger' command is used to find information about computer users like login name, full name etc..
+
+13.	What is the uniq command used for?
+-'uniq' command deletes repeated lines in a file. The command first compares adjacent lines and then removes the second and succeeding duplications of a line.
+
+14.	What is wall command?
+-'wall' command writes a message to all users that are logged in.
+
+15.	What command can be used to display the list of currently running processes?
+-'ps' command displays your currently running processes in real time.
+<br>
+16.	What is grep command?<br>
+-it is used to print lines matching a pattern.<br>
+(grep<option> pattern filename)<br>
+
+    <br>
+17.	What command can be used to display the CPU and memory usage of a process?<br>
+-'top' command is used to check memory used and cpu usage per person.<br>
+<br>
+18.	What command can be used to search for a specific pattern of text in a file?<br>
+-The grep command searches through the file, looking for matches to the pattern specified.<br>
+(grep<option> pattern filename)<br>
+
+19.	Write the syntax of the switch statement.<br>
+-SYNTAX:-
+case $var in pattern)<br>
+commands to execute;;<br>
+pattern1) commands to execute;;<br>
+pattern2) commands to execute;;<br>
+pattern3) commands to execute;;<br>
+<br>
+20.	Filters: (Data Processing Commands): head, tail, sort<br>
+-head : print first 5 lines by default.<br>
+-tail : print last 5 lines by default.<br>
+-sort : to sort data in files.<br>
+
+</pre>
+<br><br>
+<pre>
+---FIRST COME FIRST SERVE ALGORITHM---
+<br>
+/* FCFS SCHEDULING ALGORITHM */
+#include<stdio.h>
+void main()
+{
+	int i, n, sum, wt, tat, twt, ttat;
+	int t[10];
+	float awt, atat;
+	printf("Number of processors : ");
+	scanf("%d",&n);
+	for(i=0;i<n;i++)
+	{
+		printf("\n Enter burst time of the process %d ",i+1);
+		scanf("%d",&t[i]);
+	}
+	printf("\n\n\n FIRST COME FIRST SERVE SCHEDULING ALGORITHM \n\n\n");
+	printf("\n Processor ID \t Waiting Time \t Turn Around Time \n");
+	printf("1 \t\t 0 \t\t %d \n",t[0]);
+	sum = 0;
+	twt = 0;
+	ttat = t[0];
+	for(i=1;i<n;i++)
+	{
+		sum += t[i-1];
+		wt = sum;
+		tat = sum + t[i];
+		twt += wt;
+		ttat += tat;
+		printf("\n %d \t\t %d \t\t %d",i+1,wt,tat);
+		printf("\n\n\n");
+	}
+	awt = (float)twt/n;
+	atat = (float)ttat/n;
+	printf("\n Average Waiting Time %4.2f",awt);
+	printf("\n Average TurnAround Time %4.2f",atat);
+}
+
+
+---ROUND ROBIN SCHEDULING ALGORITHM---
+#include<stdio.h>
+#include<conio.h>
+void main()
+{
+	int ts,need[10],wt[10],tat[10],i,j,n,n1;
+	int bt[10],flag[10],ttat=0,twt=0;
+	float awt,atat;
+	printf("\t\tROUND ROBIN SCHEDULING ALGORITHM\n");
+	printf("Enter the number of Processors \n");
+	scanf("%d",&n);
+	n1=n;
+	printf("\nEnter the Timslice(Time Quanta) \n");
+	scanf("%d",&ts);
+	for(i=0;i<n;i++)
+	{
+		printf("Enter the Burst time for processor %d : ",i);
+		scanf("%d",&bt[i]);
+		need[i]=bt[i];
+	}
+	for(i=1;i<=n;i++)
+	{
+		flag[i]=1;
+		wt[i]=0;
+	}
+	while(n!=0)
+	{
+		for(i=1;i<=n;i++)
+		{
+			if(need[i]>=ts)
+			{
+				for(j=1;j<=n;j++)
+				{
+					if((i!=j)&&(flag[i]==1)&&(need[j]!=0))
+					wt[j]+=ts;
+				}
+				need[i]-=ts;
+				if(need[i]==0)
+				{
+					flag[i]=0;
+					n--;
+				}
+			}
+			else
+			{
+				for(j=1;j<=n;j++)
+				{
+					if((i!=j)&&(flag[i]==1)&&(need[j]!=0))
+					wt[j]+=need[i];
+				}
+			need[i]=0;
+			n--;
+			flag[i]=0;
+			}
+		}
+	}
+	for(i=1;i<=n1;i++)
+	{
+		tat[i]=wt[i]+bt[i];
+		twt=twt+wt[i];
+		ttat=ttat+tat[i];
+	}
+	awt=(float)twt/n1;
+	atat=(float)ttat/n1;
+	printf("\n\n-------ROUND ROBIN SCHEDULING ALGORITHM\n\n");
+	printf("\n\nProcess\t Burst Time\t Waiting Time\t TurnAround Time\n");
+	for(i=0;i<=n1;i++)
+	{
+		printf("\n %5d \t\t %5d \t\t %5d\t\t %5d \n",i,bt[i],wt[i],tat[i]);
+	}
+	printf("\n The average waiting time= %6.2f",awt);
+	printf("\n The average Turn around time = %6.2f",awt);
+	getch();
+}
+</pre>
+<pre>
+
+---SHORTEST JOB FIRST ALGORITHM---
+#include<stdio.h>
+void main()
+{
+	int i,j,k,n,sum,wt[10],tt[10],twt,ttat;
+	int bt[10],p[10],temp=0;
+	float awt,atat;
+	printf("Enter number of process\n");
+	scanf("%d",&n);
+	for(i=0;i<n;i++)
+	{
+		printf("\n Enter the Burst Time of Process %d: ",i);
+		scanf("%d",&bt[i]);
+		p[i]=i;
+	}
+	for (j=0;j<n;j++)
+	{
+		for (k=j+1;k<n;k++)
+		{
+			if (bt[j]>bt[k])
+			{
+				temp=bt[j];
+				bt[j]=bt[k];
+				bt[k]=temp;
+				temp=p[j];
+				p[j]=p[k];
+				p[k]=temp;
+			}
+		}
+		printf("\n");
+		for(i=0;i<n;i++)
+		printf("\t%d\t",bt[i]);
+		printf("\n");
+	}
+	printf("\n\nAfter Sorting the Process based on burst time shortest burst time first\n\n");
+	printf("\n PROCESS ID \t BURST TIME \n\n");
+	for(i=0;i<n;i++)
+	{
+		printf("%5d \t\t%5d \n\n",p[i],bt[i]);
+	}
+	printf("\n\n SHORTEST JOB FIRST SCHEDULING ALGORITHM");
+	printf("\n PROCESS ID \t BURST TIME \t WAITING TIME \t TURNAROUND TIME\n\n");
+	wt[0]=0;
+	for(i=0;i<n;i++)
+	{
+		sum=0;
+		for(k=0;k<i;k++)
+		{
+			wt[i]=sum+bt[k];
+		sum=wt[i];
+		}
+	}
+	for(i=0;i<n;i++)
+	{
+		tt[i] = bt[i] + wt[i];
+	}
+	for(i=0;i<n;i++)
+	{
+		printf("%5d \t\t%5d \t\t %5d \n\n",p[i],bt[i],wt[i],tt[i]);
+	}
+	twt=0;
+	ttat=bt[0];
+	for(i=1;i<n;i++)
+	{
+	twt=twt+wt[i];
+	ttat=ttat+tt[i];
+	}
+	awt=(float)twt/n;
+	atat=(float)ttat/n;
+	printf("\n AVERAGE WAITING TIME %4.2f",awt);
+	printf("\n AVERAGE TURN AROUND TIME %4.2f",atat);
+}
+
+
+---PRIORITY SCHEDULING ALGORITHM---
+#include<stdio.h>
+#include<conio.h>
+void main()
+{
+	int i,j,n,tat[10],wt[10],bt[10],pid[10],pr[10],t,twt=0,ttat=0;
+	float awt, atat;
+	printf("\n-------PRIORITY SCHEDULING-------\n");
+	printf("Enter the No of processors : ");
+	scanf("%d", &n);
+	for(i=0;i<n;i++)
+	{
+		pid[i] = i;
+		printf("Enter the Burst time of Pid %d : ",i);
+		scanf("%d",&bt[i]);
+		printf("Enter the Priority of Pid %d : ",i);
+		scanf("%d",&pr[i]);
+	}
+	for(i=0;i<n;i++)
+	for(j=i+1;j<n;j++)
+	{
+		if(pr[i]>pr[j])
+		{
+			t=pr[i];
+			pr[i]=pr[j];
+			pr[j]=t;
+			t=bt[i];
+			bt[i]=bt[j];
+			bt[j]=t;
+			t=pid[i];
+			pid[i]=pid[j];
+			pid[j]=t;
+		}
+	}
+	tat[0]=bt[0];
+	wt[0]=0;
+	for(i=1;i<n;i++)
+	{
+		wt[i]=wt[i-1] + bt[i-1];
+		tat[i]=wt[i]+bt[i];
+	}
+	printf("\n------------------------------------------------------------");
+	printf("Pid\t Priority\t Brust Time\t Waiting Time\t Turn Around Time\t");
+	printf("\n------------------------------------------------------------");
+	for(i=0;i<n;i++)
+	{
+		printf("\n%d\t\t%d\t%d\t%d\t\t%d",pid[i],pr[i],bt[i],wt[i],tat[i]);
+	}
+	for(i=0;i<n;i++)
+	{
+		ttat += tat[i];
+		twt += wt[i];
+	}
+	awt = (float)twt/n;
+	atat = (float)ttat/n;
+	printf("\n\nAvg. Waiting time: %f\nAvg.Turn Around Time : %f\n",awt,atat);
+	getch();
+}
+
+
+---FIRST IN FIRST OUT---
+#include<stdio.h>
+int main()
+{
+	int incomingStream[]={4,1,2,4,5};
+	int pageFaults=0;
+	int frames = 3;
+	int m,n,s,pages;
+	pages = sizeof(incomingStream)/sizeof(incomingStream[0]);
+	printf("Incoming \t Frame 1\t Frame 2\t Frame 3");
+	int temp[frames];
+	for(m=0;m<frames;m++)
+	{
+		temp[m]=-1;
+	}
+	for(m=0;m<pages;m++)
+	{
+		s=0;
+		for(n=0;n<frames;n++)
+		{
+			if(incomingStream[m] == temp[n])
+			{
+				s++;
+				pageFaults--;
+			}
+		}
+		pageFaults++;
+		if((pageFaults <= frames)&&(s==0))
+		{
+			temp[m]=incomingStream[m];
+		}
+		else if(s==0)
+		{
+			temp[(pageFaults-1)%frames] = incomingStream[m];
+		}
+		printf("\n");
+		printf("%d\t\t\t",incomingStream[m]);
+		for(n=0;n<frames;n++)
+		{
+			if(temp[n] != -1)
+			printf("%d\t\t\t",temp[n]);
+			else
+			printf(" - \t\t\t");
+		}
+	}
+	printf("\nTotal Page Faults:\t%d\n",pageFaults);
+	return 0;
+}
+
+</pre>
+<pre>
+---SHELL PROGRAMS---
+
+1. if statement with logical operator
+A)
+echo "enter 2 values"
+read a b
+if [ $a -gt $b ];
+then
+echo $a is greater
+else
+echo $b is greater
+fi
+
+2,12. if statement with logical operator
+A)
+echo "enter the number"
+read num
+if [ `expr $num % 2 -eq 0 ]
+then 
+echo "number is even"
+else
+echo "number is odd"
+fi
+
+3. if else ladder
+A)
+echo "enter two values"
+read a b
+if [ $a -lt $b ]
+then
+echo "$a is less"
+elif [ $a -eq $b ]
+then
+echo "equal"
+else
+echo "$a is great"
+fi
+
+4. biggest among three
+A)
+echo "Enter 3 Numbers"
+read a b c
+if [ $a -gt $b ] && [ $a -gt $c ]
+then 
+echo "$a is biggest "
+else if [$b -gt $c ]
+then 
+echo "$b is biggest"
+else
+echo "$c is biggest"
+fi
+fi
+
+5. while statement
+A)
+echo Enter a number
+read n
+i=1;
+while [ $i -le 10 ]
+do
+k = ` expr $n \* $i `
+echo $n "*" $i "=" $k
+i = ` expr $i + 1`
+done
+
+6. check if two characters are equal or not
+A)
+read -p"Enter two strings:" str1 str2
+if[ $str1 == $str2 ]
+then 
+echo "Equal"
+else
+echo "Unequal"
+fi
+
+7. display the name and class of student in separate line
+A)
+echo "Enter name of the student"
+read name
+echo "Class of the student"
+read class
+echo "Roll number of the student"
+read rollnumber
+clear
+echo "student name is "$name
+echo "student class "$class
+echo "student roll number "$rollnumber
+
+8. given letter is vowel or consonant
+A)
+echo "Enter any letter "
+read ch
+echo "you have entered "$ch
+if [ $ch = 'a' -o $ch = 'e' -o $ch = 'i' -o $ch = 'o' -o $ch = 'u' ]
+then
+echo "vowel"
+else
+echo "consonant"
+fi
+
+9. demonstrate case statement
+A)
+echo "Enter the first number"
+read a
+echo "Enter the second number"
+read b
+echo "1. Addition"
+echo "2. Subtraction"
+echo "3. Multiplication"
+echo "4. Division"
+echo "5. Modulus"
+echo "Enter your choice"
+read ch
+case $ch in
+1) res = ` expr $a + $b `;;
+2) res = ` expr $a - $b `;;
+3) res = ` expr $a * $b `;;
+4) res = ` expr $a / $b `;;
+5) res = ` expr $a % $b `;;
+esac
+echo $res
+
+10. Fibonacci series upto given number
+A)
+echo "How many terms do you want to get"
+read n
+i = 3
+a = 0
+b = 1
+echo $a 
+echo $b
+while [ $i -le $n ]
+do 
+c = `expr $a + $b`
+echo $c 
+a = $b
+b= $c
+i = ` expr $i +1`
+done
+
+11. Factorial of a given number
+A)
+read -p "Enter a number "num
+fact = 1
+for((i=2;i<=num;i++))
+{
+fact = $((fact*i))
+}
+echo $fact
+
+
+
+    </pre>
+    </center>
+</body>
+</html>
